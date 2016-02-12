@@ -45,6 +45,7 @@ clean:
 
 stamps/dirs:
 	mkdir $(DIRS)
+	mkdir $(LIB_DEST)/`uname`
 	@touch $@
 
 stamps/compile-src: stamps/dirs $(JAVA_SRC)
@@ -62,7 +63,7 @@ stamps/generate-jni-h: stamps/compile-src
 	@touch $@
 
 stamps/compile-jni: stamps/generate-jni-h $(JNI_SRC)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared -o $(LIB_DEST)/lib$(SONAME).so \
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared -o $(LIB_DEST)/`uname`/lib$(SONAME)-`uname -m`.so \
 		$(sort $(filter %.cpp,$(JNI_SRC)))
 	@touch $@
 
